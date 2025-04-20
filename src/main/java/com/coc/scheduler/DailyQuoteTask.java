@@ -4,7 +4,6 @@ import com.coc.model.Quote;
 import com.coc.service.QuoteService;
 import com.coc.util.GitCommitUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,6 @@ public class DailyQuoteTask {
     @Value("${git.enabled:true}")
     private boolean gitEnabled;
 
-    @Autowired
     public DailyQuoteTask(QuoteService quoteService, GitCommitUtil gitCommitUtil) {
         this.quoteService = quoteService;
         this.gitCommitUtil = gitCommitUtil;
