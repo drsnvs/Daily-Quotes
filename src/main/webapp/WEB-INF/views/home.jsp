@@ -1,9 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    // Add important security headers
+    response.setHeader("X-Content-Type-Options", "nosniff");
+    response.setHeader("X-Frame-Options", "DENY");
+    response.setHeader("X-XSS-Protection", "1; mode=block");
+    response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+    response.setHeader("Content-Security-Policy", 
+        "default-src 'self'; " +
+        "script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net 'unsafe-inline'; " +
+        "style-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com 'unsafe-inline'; " +
+        "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; " +
+        "img-src 'self' data: https:; " +
+        "connect-src 'self'; " +
+        "frame-src 'none'; " +
+        "object-src 'none'");
+    
+    // Prevent caching of sensitive information
+    response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Expires", "0");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="no-referrer">
+    <!-- CSRF meta tags would typically be added here when implemented in backend -->
     <title>Daily Inspiration</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Add Three.js and GSAP for enhanced animations -->
@@ -370,6 +394,32 @@
             });
         });
 
+        // Function to generate a random time between configured hours from application.properties
+        function getRandomTime() {
+            // Get the time range from model attributes passed from the controller
+            const startHourConfig = parseInt("${startHour}");
+            const endHourConfig = parseInt("${endHour}");
+            
+            // Generate a random hour within the range (use default values if model attributes aren't available)
+            const startHour = isNaN(startHourConfig) ? 6 : startHourConfig;
+            const endHour = isNaN(endHourConfig) ? 7 : endHourConfig;
+            
+            // Calculate a random time within the range
+            const hour = startHour + Math.random() * (endHour - startHour);
+            const hourFloor = Math.floor(hour);
+            const minute = Math.floor((hour - hourFloor) * 60);
+            
+            // Format the time with leading zeros if needed
+            const formattedMinute = minute < 10 ? `0${minute}` : minute;
+            
+            // Determine AM/PM
+            const period = hourFloor < 12 ? 'AM' : 'PM';
+            const displayHour = hourFloor > 12 ? hourFloor - 12 : (hourFloor === 0 ? 12 : hourFloor);
+            
+            // Return formatted time string (e.g., "6:45 AM")
+            return `${displayHour}:${formattedMinute} ${period}`;
+        }
+
         // Function to animate the Darshan text letter by letter
         function startDarshanAnimation() {
             return new Promise((resolve) => {
@@ -690,7 +740,7 @@
             <div class="card">
                 <div class="card-header">
                     <h1 class="card-title">Daily Inspiration</h1>
-                    <p class="card-subtitle">Wisdom for your journey</p>
+                    <p class="card-subtitle">New wisdom arrives daily at <script>document.write(getRandomTime());</script></p>
                     
                     <div class="social-icons">
                         <a href="https://www.instagram.com/darshan.vs_" class="social-icon"><i class="fab fa-instagram"></i></a>
