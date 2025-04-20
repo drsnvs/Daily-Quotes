@@ -29,6 +29,7 @@
     <meta name="referrer" content="no-referrer">
     <!-- CSRF meta tags would typically be added here when implemented in backend -->
     <title>Daily Inspiration</title>
+    <link rel="icon" href="https://www.svgrepo.com/show/499912/light-bulb.svg" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Add Three.js and GSAP for enhanced animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
@@ -740,13 +741,13 @@
             <div class="card">
                 <div class="card-header">
                     <h1 class="card-title">Daily Inspiration</h1>
-                    <p class="card-subtitle">New wisdom arrives daily at <script>document.write(getRandomTime());</script></p>
+                    <p class="card-subtitle">Darshan Sarvaiya</p>
                     
                     <div class="social-icons">
                         <a href="https://www.instagram.com/darshan.vs_" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.linkedin.com/in/darshan-sarvaiya/" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.linkedin.com/in/darshan-sarvaiya" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
                         <a href="https://www.github.com/drsnvs" class="social-icon"><i class="fab fa-github"></i></a>
-                        <a href="https://www.drsnvs.me" class="social-icon"><i class="fas fa-external-link-alt"></i></a>
+                        <a href="https://drsnvs.netlify.app" class="social-icon"><i class="fas fa-external-link-alt"></i></a>
                     </div>
                 </div>
                 
