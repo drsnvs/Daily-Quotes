@@ -47,8 +47,9 @@ public class DailyQuoteTask {
         }
     }
 
-    @Scheduled(cron = "0 07 23 * * ?")
-public void runTask() {
+    @Scheduled(cron = "0 06 23 * * ?")
+    public void runTask() {
     System.out.println(">>>> Scheduled task triggered");
     log.info(">>>> Logging from scheduled task");
+    }
 } 
