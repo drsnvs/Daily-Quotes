@@ -50,7 +50,7 @@ public class QuoteService {
     public void saveQuoteToFile(Quote quote) {
         try {
             Path path = Paths.get(quoteFilePath);
-            Files.writeString(path, quote.toString()+"Darshan", StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.writeString(path, quote.toString()+"Darshans", StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             log.info("Quote saved to file: {}", quoteFilePath);
         } catch (IOException e) {
             log.error("Error saving quote to file: {}", e.getMessage(), e);
