@@ -396,7 +396,7 @@
         });
 
         // Function to generate a random time between configured hours from application.properties
-        function getRandomTime() {
+        /* function getRandomTime() {
             // Get the time range from model attributes passed from the controller
             const startHourConfig = parseInt("${startHour}");
             const endHourConfig = parseInt("${endHour}");
@@ -419,7 +419,7 @@
             
             // Return formatted time string (e.g., "6:45 AM")
             return `${displayHour}:${formattedMinute} ${period}`;
-        }
+        }*/
 
         // Function to animate the Darshan text letter by letter
         function startDarshanAnimation() {
