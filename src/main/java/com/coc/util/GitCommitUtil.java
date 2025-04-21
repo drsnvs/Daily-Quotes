@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
@@ -36,27 +37,51 @@ public class GitCommitUtil {
             Thread.currentThread().interrupt();
         }
     }
-    
+    // Windows
+    // private void executeGitCommand(String command) throws IOException, InterruptedException {
+    //     log.info("Executing git command: {}", command);
+        
+    //     ProcessBuilder processBuilder = new ProcessBuilder();
+    //     processBuilder.command("cmd", "/c", command);
+    //     processBuilder.redirectErrorStream(true);
+        
+    //     Process process = processBuilder.start();
+        
+    //     // Log the output of the command
+    //     try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+    //         String line;
+    //         while ((line = reader.readLine()) != null) {
+    //             log.info("Git command output: {}", line);
+    //         }
+    //     }
+        
+    //     int exitCode = process.waitFor();
+    //     if (exitCode != 0) {
+    //         log.error("Git command failed with exit code: {}", exitCode);
+    //     }
+    // }
+    // linux
     private void executeGitCommand(String command) throws IOException, InterruptedException {
         log.info("Executing git command: {}", command);
-        
+    
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("cmd", "/c", command);
+        processBuilder.command("bash", "-c", command); // Use bash on Railway (Linux)
+        processBuilder.directory(new File(gitScriptPath)); // Ensure you're in the git repo
         processBuilder.redirectErrorStream(true);
-        
+    
         Process process = processBuilder.start();
-        
-        // Log the output of the command
+    
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 log.info("Git command output: {}", line);
             }
         }
-        
+    
         int exitCode = process.waitFor();
         if (exitCode != 0) {
             log.error("Git command failed with exit code: {}", exitCode);
         }
     }
+    
 } 
