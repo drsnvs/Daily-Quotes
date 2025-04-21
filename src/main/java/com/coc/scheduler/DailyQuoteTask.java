@@ -46,4 +46,9 @@ public class DailyQuoteTask {
             log.error("Error in scheduled task: {}", e.getMessage(), e);
         }
     }
+
+    @Scheduled(cron = "0 07 23 * * ?")
+public void runTask() {
+    System.out.println(">>>> Scheduled task triggered");
+    log.info(">>>> Logging from scheduled task");
 } 
