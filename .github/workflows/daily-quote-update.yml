@@ -3,7 +3,7 @@ name: Daily Git Commit and Push for Quote
 on:
   schedule:
     # This runs the job every day at midnight UTC
-    - cron: '35 17 * * *'  # Runs daily at midnight UTC
+    - cron: '38 17 * * *'  # Runs daily at midnight UTC
   workflow_dispatch:  # Allows manual trigger of the workflow
 
 jobs:
