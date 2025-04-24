@@ -62,25 +62,50 @@ public class GitCommitUtil {
     // }
     
     // linux
-    private void executeGitCommand(String scriptPath) throws IOException, InterruptedException {
-        File scriptFile = new File(scriptPath);
+    // private void executeGitCommand(String scriptPath) throws IOException, InterruptedException {
+    //     File scriptFile = new File(scriptPath);
     
-        if (!scriptFile.exists()) {
-            log.error("Git script not found at path: {}", scriptFile.getAbsolutePath());
-            return;
-        }
+    //     if (!scriptFile.exists()) {
+    //         log.error("Git script not found at path: {}", scriptFile.getAbsolutePath());
+    //         return;
+    //     }
     
-        if (!scriptFile.isFile()) {
-            log.error("Provided path is not a file: {}", scriptFile.getAbsolutePath());
-            return;
-        }
+    //     if (!scriptFile.isFile()) {
+    //         log.error("Provided path is not a file: {}", scriptFile.getAbsolutePath());
+    //         return;
+    //     }
     
-        File workingDir = scriptFile.getParentFile();
-        log.info("Executing git script: {}", scriptFile.getAbsolutePath());
-        log.info("Working directory set to: {}", workingDir.getAbsolutePath());
+    //     File workingDir = scriptFile.getParentFile();
+    //     log.info("Executing git script: {}", scriptFile.getAbsolutePath());
+    //     log.info("Working directory set to: {}", workingDir.getAbsolutePath());
     
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("bash", "-c", scriptFile.getAbsolutePath());
+    //     ProcessBuilder processBuilder = new ProcessBuilder();
+    //     processBuilder.command("bash", "-c", scriptFile.getAbsolutePath());
+    //     processBuilder.directory(workingDir);
+    //     processBuilder.redirectErrorStream(true);
+    
+    //     Process process = processBuilder.start();
+    
+    //     try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+    //         String line;
+    //         while ((line = reader.readLine()) != null) {
+    //             log.info("Git command output: {}", line);
+    //         }
+    //     }
+    
+    //     int exitCode = process.waitFor();
+    //     if (exitCode != 0) {
+    //         log.error("Git command failed with exit code: {}", exitCode);
+    //     } else {
+    //         log.info("Git command executed successfully.");
+    //     }
+    // }
+    private void executeGitCommand(String command) throws IOException, InterruptedException {
+        File workingDir = new File("/app"); // Or your actual git repo root on Railway
+    
+        log.info("Executing command: {}", command);
+    
+        ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", command);
         processBuilder.directory(workingDir);
         processBuilder.redirectErrorStream(true);
     
@@ -96,8 +121,6 @@ public class GitCommitUtil {
         int exitCode = process.waitFor();
         if (exitCode != 0) {
             log.error("Git command failed with exit code: {}", exitCode);
-        } else {
-            log.info("Git command executed successfully.");
         }
     }
     
