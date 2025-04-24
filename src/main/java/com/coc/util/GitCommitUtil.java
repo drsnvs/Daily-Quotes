@@ -25,18 +25,33 @@ public class GitCommitUtil {
         try {
             String currentDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
             String commitMessage = "Update daily quote - " + currentDate;
-            
-            // Windows doesn't use bash, so let's directly use git commands
-            executeGitCommand("git add " + quoteFilePath);
-            executeGitCommand("git commit -m \"" + commitMessage + "\"");
-            executeGitCommand("git push");
-            
-            log.info("Git commit and push operations completed");
-        } catch (IOException | InterruptedException e) {
-            log.error("Error executing git command: {}", e.getMessage(), e);
-            Thread.currentThread().interrupt();
+    
+            // Update the quote file with a new daily quote
+            // Add your logic to update the quote.txt file
+    
+            log.info("Quote updated. Git commit and push will be handled by GitHub Actions.");
+        } catch (Exception e) {
+            log.error("Error updating the quote: {}", e.getMessage(), e);
         }
     }
+    
+
+    // public void commitAndPushChanges() {
+    //     try {
+    //         String currentDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+    //         String commitMessage = "Update daily quote - " + currentDate;
+            
+    //         // Windows doesn't use bash, so let's directly use git commands
+    //         executeGitCommand("git add " + quoteFilePath);
+    //         executeGitCommand("git commit -m \"" + commitMessage + "\"");
+    //         executeGitCommand("git push");
+            
+    //         log.info("Git commit and push operations completed");
+    //     } catch (IOException | InterruptedException e) {
+    //         log.error("Error executing git command: {}", e.getMessage(), e);
+    //         Thread.currentThread().interrupt();
+    //     }
+    // }
     // Windows
     // private void executeGitCommand(String command) throws IOException, InterruptedException {
     //     log.info("Executing git command: {}", command);
@@ -100,29 +115,29 @@ public class GitCommitUtil {
     //         log.info("Git command executed successfully.");
     //     }
     // }
-    private void executeGitCommand(String command) throws IOException, InterruptedException {
-        File workingDir = new File("/app"); // Or your actual git repo root on Railway
+    // private void executeGitCommand(String command) throws IOException, InterruptedException {
+    //     File workingDir = new File("/app"); // Or your actual git repo root on Railway
     
-        log.info("Executing command: {}", command);
+    //     log.info("Executing command: {}", command);
     
-        ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", command);
-        processBuilder.directory(workingDir);
-        processBuilder.redirectErrorStream(true);
+    //     ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", command);
+    //     processBuilder.directory(workingDir);
+    //     processBuilder.redirectErrorStream(true);
     
-        Process process = processBuilder.start();
+    //     Process process = processBuilder.start();
     
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                log.info("Git command output: {}", line);
-            }
-        }
+    //     try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+    //         String line;
+    //         while ((line = reader.readLine()) != null) {
+    //             log.info("Git command output: {}", line);
+    //         }
+    //     }
     
-        int exitCode = process.waitFor();
-        if (exitCode != 0) {
-            log.error("Git command failed with exit code: {}", exitCode);
-        }
-    }
+    //     int exitCode = process.waitFor();
+    //     if (exitCode != 0) {
+    //         log.error("Git command failed with exit code: {}", exitCode);
+    //     }
+    // }
     
     
 } 
