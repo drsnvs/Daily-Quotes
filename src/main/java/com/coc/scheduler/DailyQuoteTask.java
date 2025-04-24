@@ -23,7 +23,7 @@ public class DailyQuoteTask {
         this.gitCommitUtil = gitCommitUtil;
     }
 
-    @Scheduled(cron = "${quote.schedule.cron}")
+    @Scheduled(cron = "${quote.schedule.cron}", zone = "Asia/Kolkata")
     public void fetchAndSaveQuoteDaily() {
         log.info("Starting scheduled task to fetch and save daily quote");
         
