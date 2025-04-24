@@ -62,12 +62,26 @@ public class GitCommitUtil {
     // }
     
     // linux
-    private void executeGitCommand(String command) throws IOException, InterruptedException {
-        log.info("Executing git command: {}", command);
+    private void executeGitCommand(String scriptPath) throws IOException, InterruptedException {
+        File scriptFile = new File(scriptPath);
+    
+        if (!scriptFile.exists()) {
+            log.error("Git script not found at path: {}", scriptFile.getAbsolutePath());
+            return;
+        }
+    
+        if (!scriptFile.isFile()) {
+            log.error("Provided path is not a file: {}", scriptFile.getAbsolutePath());
+            return;
+        }
+    
+        File workingDir = scriptFile.getParentFile();
+        log.info("Executing git script: {}", scriptFile.getAbsolutePath());
+        log.info("Working directory set to: {}", workingDir.getAbsolutePath());
     
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("bash", "-c", command); // Use bash on Railway (Linux)
-        processBuilder.directory(new File(gitScriptPath)); // Ensure you're in the git repo
+        processBuilder.command("bash", "-c", scriptFile.getAbsolutePath());
+        processBuilder.directory(workingDir);
         processBuilder.redirectErrorStream(true);
     
         Process process = processBuilder.start();
@@ -82,7 +96,10 @@ public class GitCommitUtil {
         int exitCode = process.waitFor();
         if (exitCode != 0) {
             log.error("Git command failed with exit code: {}", exitCode);
+        } else {
+            log.info("Git command executed successfully.");
         }
     }
+    
     
 } 
