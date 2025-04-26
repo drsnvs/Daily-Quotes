@@ -48,7 +48,7 @@ jobs:
 
       - name: Call the Railway-hosted Spring Boot app to get the quote
         run: |
-          curl https:quotes.up.railway.app/quote -o quote.txt
+          curl https:drsnvs.me/quote -o quote.txt
 
       - name: Commit and push
         run: |
